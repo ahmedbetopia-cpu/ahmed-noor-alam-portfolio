@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgG3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141c11" />
+      <stop offset="100%" stop-color="#0e140b" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bgG3)" />
+  <circle cx="400" cy="225" r="180" fill="#f59e0b" opacity="0.05" />
+
+  <!-- Bar chart and visual analytics illustration -->
+  <g transform="translate(220, 110)">
+    <rect x="0" y="0" width="360" height="230" rx="14" fill="#182013" stroke="#25301f" stroke-width="2" />
+    
+    <!-- KPI summary cards -->
+    <rect x="25" y="25" width="90" height="45" rx="8" fill="#202919" stroke="#f59e0b" stroke-width="1" />
+    <rect x="135" y="25" width="90" height="45" rx="8" fill="#202919" stroke="#7cb062" stroke-width="1" />
+    <rect x="245" y="25" width="90" height="45" rx="8" fill="#202919" stroke="#bfdcaf" stroke-width="1" />
+    
+    <!-- Bars -->
+    <rect x="50" y="140" width="30" height="60" rx="4" fill="#5e8e49" />
+    <rect x="110" y="110" width="30" height="90" rx="4" fill="#7cb062" />
+    <rect x="170" y="90" width="30" height="110" rx="4" fill="#f59e0b" />
+    <rect x="230" y="130" width="30" height="70" rx="4" fill="#d97706" />
+    <rect x="290" y="80" width="30" height="120" rx="4" fill="#fbbf24" />
+  </g>
+</svg>

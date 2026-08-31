@@ -1,0 +1,77 @@
+---
+title: "Enterprise Multi-Layer Approval Management System"
+client: "Social Marketing Company (SMC)"
+year: "2024"
+description: "Designed and built a multi-layer approval workflow system on Microsoft 365 Power Platform with dynamic approver insertion, vetting, and document governance — embedded within Microsoft Teams."
+toolsUsed: ["Power Apps", "Power Automate", "SharePoint", "Microsoft Teams", "Adaptive Cards"]
+coverImage: "/images/power-automate.svg"
+highlights:
+  - "5-action approver decision model (Approve, Reject, Return, Vet, Insert)"
+  - "Dynamic approval path modification mid-process"
+  - "Auto-generated sequential approval numbers"
+  - "Complete audit trail with exportable logs"
+problem: "The client relied on paper-based and disjointed email threads for high-value procurement and project requisitions, resulting in 7-14 day approval cycles, lost attachments, and zero centralized visibility for executives."
+approach: "Engineered an end-to-end low-code solution featuring a custom Power Apps portal for request creation, a resilient Power Automate state machine engine for routing, and interactive Microsoft Teams Adaptive Cards for one-click manager sign-offs."
+outcome: "Reduced requisition processing time by 82%, eliminated lost audit histories, and achieved 100% compliance transparency across 15+ internal departments."
+---
+
+# Enterprise Multi-Layer Approval Management System
+
+## Executive Summary
+
+Large organizations with multi-tiered management hierarchies frequently suffer from slow decision-making bottlenecks. This case study explores how we engineered an enterprise-ready approval governance engine using Microsoft Power Platform and Microsoft Teams.
+
+---
+
+## The Problem & Challenges
+
+Prior to this solution, the organization operated on physical forms and asynchronous email approvals. 
+
+Key pain points included:
+- **Long Turnaround Times**: Average requisition approval cycle was 9.4 business days.
+- **Approver Bottlenecks**: If a manager went on leave, the request was stuck indefinitely with no delegation fallback.
+- **Audit Deficits**: Compliance auditors had to manually match paper signatures against email PDF attachments.
+
+---
+
+## Architectural Approach
+
+We architected a solution built entirely on Microsoft 365 services to minimize licensing overhead while delivering enterprise reliability.
+
+```
++--------------------------------------------------------+
+| 1. Request Creation (Power Apps Canvas App)            |
++--------------------------------------------------------+
+                           |
+                           v
++--------------------------------------------------------+
+| 2. Rules & Threshold Router (Power Automate Cloud Flow)|
++--------------------------------------------------------+
+                           |
+                           v
++--------------------------------------------------------+
+| 3. Approver Notification (Teams Adaptive Card / Email) |
++--------------------------------------------------------+
+                           |
+                           v
++--------------------------------------------------------+
+| 4. Governance & Logging (Dataverse & Audit Tables)     |
++--------------------------------------------------------+
+```
+
+### Innovative 5-Action Decision Matrix
+
+Rather than limiting managers to binary "Approve" or "Reject" choices, we introduced:
+1. **Approve**: Move to subsequent threshold step.
+2. **Reject**: Terminate process with required rejection rationale.
+3. **Return**: Send back to originator for clarification or invoice re-attachment.
+4. **Vet**: Request an advisory technical review from legal or finance without losing queue placement.
+5. **Insert Approver**: Dynamically add an ad-hoc stakeholder into the workflow chain.
+
+---
+
+## Key Results & Impact
+
+- **82% Acceleration**: Average turnaround dropped from 9.4 days to under 24 hours.
+- **Zero Data Loss**: 100% of audit logs and digital signatures are centralized and exportable.
+- **High User Adoption**: 94% of approvals are now completed directly inside Microsoft Teams mobile & desktop clients.

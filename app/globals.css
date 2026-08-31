@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #f5f8ec;
+    --bg-card: #ffffff;
+    --text-primary: #1c1b17;
+    --text-muted: #5c594f;
+    --border-color: #eae8e1;
+    --accent-emerald: #16a34a;
+    --accent-gold: #d97706;
+  }
+
+  .dark {
+    --bg-primary: #171d13;
+    --bg-card: #1f271a;
+    --text-primary: #f5f4f0;
+    --text-muted: #a8a599;
+    --border-color: #2b3823;
+    --accent-emerald: #22c55e;
+    --accent-gold: #f59e0b;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .serif-editorial {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+  }
+
+  ::selection {
+    background-color: rgba(22, 163, 74, 0.25);
+    color: #15803d;
+  }
+
+  .dark ::selection {
+    background-color: rgba(245, 158, 11, 0.25);
+    color: #fef08a;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .gold-gradient-text {
+    @apply bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 dark:from-gold-400 dark:via-amber-300 dark:to-gold-500 bg-clip-text text-transparent;
+  }
+
+  .olive-card {
+    @apply bg-white dark:bg-olive-900/80 border border-warm-200 dark:border-olive-800/70 rounded-2xl p-6 transition-all duration-300 hover:border-emerald-500/40 dark:hover:border-gold-500/40 hover:shadow-lg dark:hover:shadow-glow-olive;
+  }
+
+  .badge-status {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wide uppercase bg-emerald-50 text-emerald-800 border border-emerald-200/80 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/25 shadow-sm;
+  }
+}
+
+/* Background ambient glow effect */
+.bg-ambient-glow {
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(22, 163, 74, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(94, 142, 73, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
+}
+
+.dark .bg-ambient-glow {
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(94, 142, 73, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 75%, rgba(245, 158, 11, 0.06) 0%, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-warm-300 dark:bg-olive-800 rounded-full hover:bg-emerald-500/50 dark:hover:bg-gold-500/50 transition-colors;
+}
+
+/* Carousel utility hiding standard scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Horizontal continuous marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 40s linear infinite;
+}
+
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
+

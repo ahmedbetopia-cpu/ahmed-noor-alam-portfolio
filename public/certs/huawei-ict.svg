@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="huaweiRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </radialGradient>
+  </defs>
+  <!-- Background Disc -->
+  <circle cx="100" cy="100" r="90" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+  
+  <!-- Huawei Red Flower Petals Fan -->
+  <g transform="translate(100, 48) scale(0.65)">
+    <path d="M0 -35 C-8 -20 -10 -5 0 0 C10 -5 8 -20 0 -35 Z" fill="url(#huaweiRed)" />
+    <path d="M-15 -30 C-22 -15 -18 -2 -5 0 C2 -5 3 -20 -15 -30 Z" fill="url(#huaweiRed)" />
+    <path d="M15 -30 C22 -15 18 -2 5 0 C-2 -5 -3 -20 15 -30 Z" fill="url(#huaweiRed)" />
+    <path d="M-28 -18 C-32 -5 -25 5 -10 2 C-5 -2 -8 -15 -28 -18 Z" fill="url(#huaweiRed)" />
+    <path d="M28 -18 C32 -5 25 5 10 2 C5 -2 8 -15 28 -18 Z" fill="url(#huaweiRed)" />
+  </g>
+
+  <!-- Text -->
+  <text x="100" y="80" font-family="sans-serif" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="1">HUAWEI</text>
+  <text x="100" y="96" font-family="sans-serif" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="1">ICT</text>
+  <text x="100" y="112" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Academy</text>
+  
+  <!-- Red Laurel Ribbon / Wreath -->
+  <path d="M40 70 C30 110, 45 150, 100 165 C155 150, 170 110, 160 70" fill="none" stroke="#b91c1c" stroke-width="3" stroke-linecap="round" />
+  <text x="100" y="145" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">Data Management</text>
+  <text x="100" y="155" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">&amp; Analytics</text>
+</svg>

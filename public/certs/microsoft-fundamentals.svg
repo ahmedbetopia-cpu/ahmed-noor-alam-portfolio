@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="msFundBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0078d4" />
+      <stop offset="100%" stop-color="#002d5a" />
+    </linearGradient>
+  </defs>
+  <!-- Outer Shield -->
+  <path d="M100 12 L165 35 C165 110, 100 165, 100 185 C100 165, 35 110, 35 35 Z" fill="url(#msFundBlue)" stroke="#ffffff" stroke-width="4" />
+  
+  <!-- Header Text -->
+  <text x="100" y="32" font-family="sans-serif" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">Microsoft</text>
+  <text x="100" y="44" font-family="sans-serif" font-size="7.5" font-weight="600" fill="#d0e2ff" text-anchor="middle" letter-spacing="0.5">CERTIFIED</text>
+  
+  <!-- Center Ribbon Banner -->
+  <rect x="18" y="70" width="164" height="30" rx="6" fill="#ffffff" stroke="#002d5a" stroke-width="2" />
+  <text x="100" y="90" font-family="sans-serif" font-size="10" font-weight="900" fill="#002d5a" text-anchor="middle" letter-spacing="0.5">FUNDAMENTALS</text>
+  
+  <!-- Star -->
+  <polygon points="100,120 106,138 125,138 110,149 116,167 100,156 84,167 90,149 75,138 94,138" fill="#ffffff" />
+</svg>

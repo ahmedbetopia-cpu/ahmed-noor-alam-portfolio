@@ -1,0 +1,56 @@
+---
+title: "Designing Scalable Power Apps Canvas Applications"
+date: "2024-02-28"
+category: "Power Apps"
+tags: ["Power Apps", "UI/UX", "Architecture"]
+excerpt: "Best practices for building responsive, maintainable canvas applications in Power Apps with clean component architectures and delegated queries."
+coverImage: "/images/power-apps.svg"
+---
+
+# Designing Scalable Power Apps Canvas Applications
+
+Power Apps allows developers to assemble business applications rapidly. However, as applications scale in user count and complexity, poor delegation and disorganized formulas can degrade performance.
+
+Here is an architectural checklist for engineering high-performance Canvas Apps.
+
+---
+
+## 1. Mastering Query Delegation
+
+One of the most frequent performance bottlenecks in Power Apps is hitting non-delegable function warnings. When a formula cannot be delegated, Power Apps processes records locally, capped by default at 500 records (configurable to 2,000).
+
+```powerfx
+// Delegable filtering against Dataverse or SharePoint
+Filter(
+    'Work Orders',
+    Status = 'Work Order Status'.Active && 
+    Priority = 'Priority Level'.High
+)
+```
+
+**Rule of thumb**: Always utilize indexing on database columns used in search and filter operations, and avoid nested calculations within delegable predicates.
+
+---
+
+## 2. Component Reusability
+
+Rather than repeating headers, navigation rails, and modal dialogs across multiple screens, create **Canvas Components**:
+
+- **Custom Properties**: Pass inputs such as theme color, current user profile, and active screen title.
+- **Output Properties**: Emit selected menu actions back to the hosting screen.
+
+---
+
+## 3. State Management Best Practices
+
+Use global variables (`Set()`) sparingly. Favor context variables (`UpdateContext()`) for screen-scoped state and collections (`ClearCollect()`) for cached lookups.
+
+```powerfx
+// Cache reference metadata on app launch
+Concurrent(
+    ClearCollect(colDepartments, 'Departments Table'),
+    ClearCollect(colUserRoles, 'User Roles Table')
+);
+```
+
+By loading static collections concurrently during `App.OnStart`, initial screen render times drop substantially.

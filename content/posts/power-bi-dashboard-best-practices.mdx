@@ -1,0 +1,63 @@
+---
+title: "Power BI Data Modeling: Star Schema & DAX Optimization"
+date: "2024-01-20"
+category: "Power BI"
+tags: ["Power BI", "Data Analytics", "DAX"]
+excerpt: "A practical guide to star schema data modeling, avoiding bidirectional filters, and writing clean, performant DAX measures for executive reporting."
+coverImage: "/images/power-bi.svg"
+---
+
+# Power BI Data Modeling: Star Schema & DAX Optimization
+
+Building beautiful Power BI dashboards is only half the journey. If the underlying data model is flat or overly connected with bidirectional cross-filtering, report refreshes will lag and numbers may behave unpredictably.
+
+Let's explore key architectural patterns for robust Power BI models.
+
+---
+
+## 1. Always Default to a Star Schema
+
+A star schema separates data into two clear categories:
+- **Fact Tables**: Contain quantitative measurements (sales amounts, ticket counts, durations).
+- **Dimension Tables**: Contain descriptive context (dates, products, geographic regions, employees).
+
+```
+   [Dim_Customer]        [Dim_Date]
+          \                 /
+           \               /
+            [Fact_Orders]
+           /               \
+          /                 \
+   [Dim_Product]        [Dim_Store]
+```
+
+### Why Star Schema Wins:
+1. VertiPaq engine compresses data significantly better when dimension attributes are split from fact measurements.
+2. DAX expressions remain simple and fast without intricate table traversing.
+
+---
+
+## 2. DAX: Avoid Calculated Columns on Fact Tables
+
+Whenever possible, prefer **Measures** over Calculated Columns on large fact tables. Calculated columns consume RAM in the data model, whereas measures are evaluated on-the-fly inside the filter context.
+
+```dax
+// Clean, optimized measure pattern
+Total Revenue YoY Growth % = 
+VAR CurrentYearSales = [Total Revenue]
+VAR PriorYearSales = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR('Dim_Date'[Date]))
+RETURN
+    DIVIDE(CurrentYearSales - PriorYearSales, PriorYearSales, 0)
+```
+
+---
+
+## 3. Implement Row-Level Security (RLS) Gracefully
+
+Using dynamic RLS (`USERPRINCIPALNAME()`), you can safeguard sensitive departmental numbers with zero report duplication:
+
+```dax
+'Dim_Employee'[Email] = USERPRINCIPALNAME()
+```
+
+Keep your models clean, your DAX explicit, and your visuals purposeful!

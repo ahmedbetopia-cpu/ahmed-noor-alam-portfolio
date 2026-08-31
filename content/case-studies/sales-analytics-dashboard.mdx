@@ -1,0 +1,47 @@
+---
+title: "Real-Time Sales Performance & Executive Analytics Platform"
+client: "Retail & Distribution Group"
+year: "2024"
+description: "Built an interactive Power BI dashboard for real-time sales performance tracking with drill-through capabilities, KPI monitoring, and automated data refresh."
+toolsUsed: ["Power BI", "SQL", "Microsoft Fabric", "DAX", "Power Query"]
+coverImage: "/images/power-bi.svg"
+highlights:
+  - "Real-time data refresh with scheduled pipelines"
+  - "Drill-through from summary to transaction level"
+  - "Mobile-optimized dashboard views"
+  - "Role-based row-level security (RLS)"
+problem: "Executives had to wait until month-end for sales closure reports compiled across disparate ERP and Excel sheets, creating a 3-week blind spot in territory performance."
+approach: "Modeled a scalable Star Schema data warehouse on Microsoft Fabric and SQL, connected to interactive Power BI dashboards with granular DAX measures and dynamic Row-Level Security."
+outcome: "Enabled daily operational decision-making, reduced monthly reporting overhead by 40+ hours, and provided mobile dashboards to 50+ regional sales managers."
+---
+
+# Real-Time Sales Performance & Executive Analytics Platform
+
+## Executive Summary
+
+Providing executive leadership with instant visibility into revenue, target variance, and channel velocity is key to competitive agility. This project transformed a delayed monthly reporting cycle into a live, interactive data intelligence dashboard.
+
+---
+
+## The Problem
+
+- **Disparate Data Sources**: Point of Sale (POS) figures lived in SQL, CRM data lived in Salesforce, and operational targets lived in Excel.
+- **Reporting Delay**: Business leaders operated with a 15-20 day data lag.
+- **No Self-Service**: Custom ad-hoc queries required IT database engineers to write one-off SQL reports.
+
+---
+
+## Solution Architecture
+
+1. **ETL Pipelines in Microsoft Fabric**: Consolidated and cleansed raw ERP transaction logs on an automated 4-hour schedule.
+2. **Optimized Star Schema**: Structured fact tables around orders and line items, linked to clean dimensions (`Dim_Region`, `Dim_Product`, `Dim_SalesRep`, `Dim_Calendar`).
+3. **Advanced DAX Metrics**: Formulated dynamic measures for YTD growth, YoY comparative variances, and moving averages.
+4. **Row-Level Security**: Allowed regional managers to view only their assigned branch metrics while executive leadership maintained national overview.
+
+---
+
+## Business Impact
+
+- **Instant Refresh**: Data updates refreshed 6 times daily automatically.
+- **Time Reclaimed**: Saved finance and analytics teams 40+ hours per month of manual aggregation.
+- **Strategic Agility**: Enabled regional managers to address stock outages and sales dips mid-quarter rather than post-mortem.

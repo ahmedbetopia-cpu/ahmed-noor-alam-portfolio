@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="400" height="350">
+  <defs>
+    <!-- Filter for subtle drop shadow on ribbon -->
+    <filter id="ribbonShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Main Shield Outline Background (Dark Navy Border) -->
+  <path d="M200 12 L290 42 C290 145, 270 240, 200 330 C130 240, 110 145, 110 42 Z" fill="#0c2340" />
+
+  <!-- Top Shield (Dark Charcoal Gray) -->
+  <path d="M200 18 L284 46 C284 110, 280 135, 275 150 L125 150 C120 135, 116 110, 116 46 Z" fill="#4a4f55" />
+
+  <!-- Microsoft CERTIFIED Text -->
+  <text x="200" y="70" font-family="'Segoe UI', -apple-system, Roboto, sans-serif" font-size="21" font-weight="700" fill="#ffffff" text-anchor="middle">Microsoft</text>
+  <text x="200" y="98" font-family="'Segoe UI', -apple-system, Roboto, sans-serif" font-size="16" font-weight="600" fill="#d2d6dc" text-anchor="middle" letter-spacing="3.5">CERTIFIED</text>
+
+  <!-- Bottom Shield (Vibrant Royal Blue) -->
+  <path d="M125 150 L275 150 C270 230, 245 275, 200 322 C155 275, 130 230, 125 150 Z" fill="#0067b8" />
+
+  <!-- Two 5-Pointed Stars (Associate Rank) -->
+  <g fill="#ffffff" transform="translate(162, 238) scale(0.9)">
+    <polygon points="0,-18 5,-5 19,-5 8,4 12,18 0,9 -12,18 -8,4 -19,-5 -5,-5" />
+  </g>
+  <g fill="#ffffff" transform="translate(238, 238) scale(0.9)">
+    <polygon points="0,-18 5,-5 19,-5 8,4 12,18 0,9 -12,18 -8,4 -19,-5 -5,-5" />
+  </g>
+
+  <!-- Curved Center Ribbon Banner with Drop Shadow -->
+  <g filter="url(#ribbonShadow)">
+    <path d="M 85 140 Q 200 160 315 140 L 310 215 Q 200 235 90 215 Z" fill="#ffffff" stroke="#333333" stroke-width="4.5" stroke-linejoin="round" />
+    <text x="200" y="193" font-family="'Segoe UI', 'Inter', -apple-system, sans-serif" font-size="30" font-weight="900" fill="#202124" text-anchor="middle" letter-spacing="1.5">ASSOCIATE</text>
+  </g>
+</svg>

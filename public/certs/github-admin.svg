@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="ghDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#24292f" />
+      <stop offset="100%" stop-color="#0f141c" />
+    </linearGradient>
+  </defs>
+  <!-- Octagon / Hexagon badge -->
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55" fill="url(#ghDark)" stroke="#57606a" stroke-width="4" />
+  
+  <!-- Octocat silhouette -->
+  <path d="M100 45 C75 45 55 65 55 90 C55 110 68 127 86 133 C88 133 89 132 89 131 L89 123 C75 126 72 116 72 116 C70 110 66 108 66 108 C61 105 66 105 66 105 C71 105 74 110 74 110 C78 118 87 115 90 114 C91 110 92 107 94 105 C83 104 71 100 71 80 C71 75 73 70 76 66 C75 64 74 59 76 53 C76 53 80 52 90 58 C94 57 98 56 102 56 C106 56 110 57 114 58 C124 52 128 53 128 53 C130 59 129 64 128 66 C131 70 133 75 133 80 C133 100 121 104 110 105 C112 107 114 111 114 117 L114 131 C114 132 115 133 117 133 C135 127 148 110 148 90 C148 65 128 45 100 45 Z" fill="#ffffff" />
+
+  <!-- Bottom Ribbon -->
+  <rect x="25" y="140" width="150" height="24" rx="6" fill="#2da44e" />
+  <text x="100" y="156" font-family="sans-serif" font-size="9.5" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">ADMINISTRATION</text>
+</svg>

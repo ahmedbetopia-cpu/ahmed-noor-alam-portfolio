@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182215" />
+      <stop offset="100%" stop-color="#0f140c" />
+    </linearGradient>
+    <linearGradient id="goldG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bgG)" />
+  <circle cx="700" cy="80" r="150" fill="#f59e0b" opacity="0.08" filter="blur(40px)" />
+  <circle cx="100" cy="380" r="180" fill="#5e8e49" opacity="0.1" filter="blur(50px)" />
+  
+  <!-- Flow Diagram Art -->
+  <g transform="translate(180, 140)">
+    <rect x="0" y="30" width="120" height="80" rx="16" fill="#1f2c1b" stroke="#f59e0b" stroke-width="2" />
+    <text x="60" y="75" font-family="sans-serif" font-size="14" fill="#fbbf24" font-weight="bold" text-anchor="middle">Trigger</text>
+    
+    <path d="M120 70 L190 70" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,4" />
+    <polygon points="190,65 200,70 190,75" fill="#f59e0b" />
+
+    <rect x="200" y="10" width="140" height="120" rx="16" fill="#243420" stroke="#7cb062" stroke-width="2" />
+    <text x="270" y="65" font-family="sans-serif" font-size="14" fill="#dcebd4" font-weight="bold" text-anchor="middle">Approval</text>
+    <text x="270" y="85" font-family="sans-serif" font-size="12" fill="#9dc785" text-anchor="middle">Sequential Logic</text>
+
+    <path d="M340 70 L410 70" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,4" />
+    <polygon points="410,65 420,70 410,75" fill="#f59e0b" />
+
+    <rect x="420" y="30" width="120" height="80" rx="16" fill="#1f2c1b" stroke="#f59e0b" stroke-width="2" />
+    <text x="480" y="75" font-family="sans-serif" font-size="14" fill="#fbbf24" font-weight="bold" text-anchor="middle">Complete</text>
+  </g>
+</svg>

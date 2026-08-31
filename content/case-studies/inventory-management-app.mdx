@@ -1,0 +1,45 @@
+---
+title: "Barcode-Driven Warehouse Inventory Tracking Application"
+client: "Supply Chain Operations"
+year: "2023"
+description: "Developed a canvas app for warehouse inventory tracking with barcode scanning, stock alerts, and automated reorder notifications via Power Automate."
+toolsUsed: ["Power Apps", "Power Automate", "SharePoint", "Dataverse", "Adaptive Cards"]
+coverImage: "/images/power-apps.svg"
+highlights:
+  - "Barcode scanning integration for instant mobile stock updates"
+  - "Automated low-stock alerts via Teams and email"
+  - "Role-based access for warehouse staff vs procurement managers"
+  - "Automated weekly reconciliation reports"
+problem: "Warehouse workers manually recorded incoming and outgoing pallet counts on paper clipboards, leading to frequent transcription errors, inventory shrinkage, and delayed stockout alerts."
+approach: "Created a dedicated, touch-optimized Power Apps canvas app with native device camera barcode scanning, paired with background Power Automate flows that trigger instant re-order alerts when items breach buffer levels."
+outcome: "Reduced inventory discrepancy rate to under 0.5%, slashed item intake logging time from 4 minutes to 20 seconds, and eliminated unexpected stockouts."
+---
+
+# Barcode-Driven Warehouse Inventory Tracking Application
+
+## Overview
+
+Efficient supply chain operations hinge on accurate, real-time inventory counts. This project digitized physical clipboard counting into a mobile-first Power App equipped with device camera barcode scanning.
+
+---
+
+## The Challenge
+
+- **Manual Data Entry**: Warehouse technicians recorded pallet serials by hand and re-typed them into desktop Excel sheets at the end of the shift.
+- **Stock Discrepancies**: Physical stock frequently diverged from system records by up to 8%.
+- **Emergency Stockouts**: Procurement was only notified of stock exhaustion after production lines were halted.
+
+---
+
+## Technical Solution
+
+1. **Power Apps Mobile Client**: Built with large touch targets, offline data caching for dead-zones, and native camera barcode decoding.
+2. **Instant Validation**: Scanned barcodes are validated instantly against Dataverse product catalogs with auditory and haptic feedback.
+3. **Automated Buffer Monitoring**: A lightweight Power Automate cloud flow continuously checks minimum reorder thresholds and notifies purchasing agents via Microsoft Teams cards.
+
+---
+
+## Impact
+
+- **90% Logging Speed Improvement**: Stock receipt logging dropped from 4 minutes to 20 seconds per pallet.
+- **Zero Critical Production Halts**: Automated alerts prevented stock exhaustion across two consecutive manufacturing quarters.

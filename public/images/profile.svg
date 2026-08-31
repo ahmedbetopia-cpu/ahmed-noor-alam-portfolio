@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <defs>
+    <linearGradient id="bgPhoto" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2c1b" />
+      <stop offset="50%" stop-color="#182315" />
+      <stop offset="100%" stop-color="#10170e" />
+    </linearGradient>
+    <radialGradient id="glowPhoto" cx="50%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#22c55e" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#10170e" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a373" />
+      <stop offset="100%" stop-color="#bc8a5f" />
+    </linearGradient>
+    <linearGradient id="shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="700" rx="36" fill="url(#bgPhoto)" />
+  <circle cx="300" cy="280" r="240" fill="url(#glowPhoto)" />
+
+  <!-- Abstract Dev Avatar Silhouette with Studio Lighting -->
+  <g transform="translate(300, 320)">
+    <!-- Shoulders / Shirt -->
+    <path d="M-190 280 C-170 170, -100 130, -50 110 L50 110 C100 130, 170 170, 190 280 Z" fill="url(#shirt)" />
+    <!-- Collar -->
+    <polygon points="0,110 -35,50 35,50" fill="#cbd5e1" />
+    <!-- Neck -->
+    <rect x="-35" y="10" width="70" height="70" rx="10" fill="url(#skin)" />
+    <!-- Head -->
+    <ellipse cx="0" cy="-60" rx="85" ry="105" fill="url(#skin)" />
+    <!-- Hair -->
+    <path d="M-90 -70 C-85 -160, 85 -160, 90 -70 C95 -10, 80 0, 75 -20 C60 -100, -60 -100, -75 -20 C-80 0, -95 -10, -90 -70 Z" fill="#1e1e1e" />
+    <!-- Beard / Facial Hair outline -->
+    <path d="M-55 -40 C-40 45, 40 45, 55 -40 C45 30, -45 30, -55 -40 Z" fill="#1e1e1e" opacity="0.8" />
+  </g>
+
+  <!-- Clean Floating Badge -->
+  <g transform="translate(50, 600)">
+    <rect width="250" height="60" rx="18" fill="rgba(24, 35, 21, 0.85)" stroke="rgba(34, 197, 94, 0.3)" stroke-width="1.5" />
+    <circle cx="30" cy="30" r="8" fill="#22c55e" />
+    <text x="50" y="27" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f5f4f0">Ahmed Noor Alam</text>
+    <text x="50" y="44" font-family="sans-serif" font-size="10" fill="#a8a599">IT Administrator</text>
+  </g>
+</svg>

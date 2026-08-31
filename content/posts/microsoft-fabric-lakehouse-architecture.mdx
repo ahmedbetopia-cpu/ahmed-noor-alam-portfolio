@@ -1,0 +1,71 @@
+---
+title: "Architecting Lakehouse Analytics with Microsoft Fabric, OneLake & Direct Lake"
+date: "2024-04-10"
+category: "Microsoft Fabric"
+tags: ["Microsoft Fabric", "OneLake", "Lakehouse", "Warehouse", "PySpark", "Direct Lake", "Medallion Architecture", "Data Modeling", "ETL", "Data Warehousing"]
+excerpt: "A practical guide to implementing Medallion Architecture (Bronze, Silver, Gold) in Microsoft Fabric Lakehouses and connecting Direct Lake semantic models for sub-second Power BI reporting."
+coverImage: "/images/power-bi.svg"
+---
+
+# Architecting Lakehouse Analytics with Microsoft Fabric, OneLake & Direct Lake
+
+Microsoft Fabric unifies enterprise data warehousing, big data processing, and business intelligence into an integrated SaaS platform. By centralizing storage into **OneLake** (the "OneDrive for data") in Delta Parquet format, organizations can eliminate redundant ETL pipelines and data duplication.
+
+In this article, we explore building an enterprise analytics pipeline using **Medallion Architecture** and **Direct Lake** mode.
+
+---
+
+## The Medallion Architecture in Fabric
+
+```
+[Raw Sources: ERP, APIs, IoT]
+             ↓
+    🥉 [Bronze Layer: Raw Ingestion via Dataflow Gen2]
+             ↓
+    🥈 [Silver Layer: Cleansed & Normalized via PySpark Notebooks]
+             ↓
+    🥇 [Gold Layer: Star Schema Lakehouse / Warehouse]
+             ↓
+    📊 [Direct Lake Semantic Model → Power BI Dashboards]
+```
+
+### 1. Bronze Layer (Raw Ingestion)
+- Ingest source files and database records in their native format without transformation.
+- Automated through **Dataflow Gen2** pipelines scheduled to run at regular intervals.
+
+### 2. Silver Layer (Cleansing & Transformation)
+- Standardize schema types, deduplicate records, handle null values, and join disparate source entities.
+- Processed at scale using **Fabric Notebooks** powered by **PySpark**.
+
+```python
+# Cleansing and transforming data in Fabric PySpark Notebook
+df_raw = spark.read.table("bronze_sales_orders")
+
+df_silver = df_raw.filter(df_raw.OrderAmount.isNotNull()) \
+                  .dropDuplicates(["OrderID"]) \
+                  .withColumn("ProcessedTimestamp", current_timestamp())
+
+df_silver.write.format("delta").mode("overwrite").saveAsTable("silver_sales_orders")
+```
+
+### 3. Gold Layer (Dimensional Star Schema)
+- Organize data into Kimball-style Fact and Dimension tables (`Dim_Customer`, `Dim_Product`, `Fact_Sales`).
+- Optimized with Delta Parquet V-Order indexing for instant analytical querying.
+
+---
+
+## The Power of Direct Lake Mode in Power BI
+
+Traditionally, Power BI reports had to choose between **Import Mode** (fast, but requires recurring scheduled data refreshes and RAM allocation) and **DirectQuery** (live data, but slow DAX calculations over large datasets).
+
+**Direct Lake** combines the best of both worlds:
+- Power BI reads Delta Parquet tables directly from OneLake without loading data into memory or generating SQL queries.
+- Delivers **Import-mode speed** with **real-time data freshness**.
+
+---
+
+## Best Practices Checklist
+
+1. **Enable V-Order**: Ensure V-Order optimization is toggled on in Fabric Notebook writes for accelerated reading.
+2. **Minimize Table Fragmentation**: Run regular `OPTIMIZE` and `VACUUM` maintenance jobs on delta tables.
+3. **Enforce Row-Level Security (RLS)**: Define security rules on the semantic model to restrict regional branch access seamlessly.

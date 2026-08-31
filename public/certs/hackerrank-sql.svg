@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <linearGradient id="hrGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed136" />
+      <stop offset="100%" stop-color="#f5b800" />
+    </linearGradient>
+  </defs>
+
+  <!-- Golden Hexagon Badge (Matching Image 3) -->
+  <polygon points="120,12 210,64 210,168 120,220 30,168 30,64" fill="url(#hrGold)" rx="24" />
+
+  <!-- 4-Disk Database Stack Cylinder Icon -->
+  <g fill="#2d3748" stroke="#2d3748" stroke-width="2.5" stroke-linecap="round" transform="translate(85, 48)">
+    <!-- Disk 1 -->
+    <ellipse cx="35" cy="12" rx="32" ry="10" fill="none" stroke-width="4" />
+    <!-- Disk 2 -->
+    <path d="M3 24 C3 30, 67 30, 67 24" fill="none" stroke-width="4" />
+    <!-- Disk 3 -->
+    <path d="M3 36 C3 42, 67 42, 67 36" fill="none" stroke-width="4" />
+    <!-- Disk 4 -->
+    <path d="M3 48 C3 54, 67 54, 67 48" fill="none" stroke-width="4" />
+  </g>
+
+  <!-- "Sql" Text -->
+  <text x="120" y="146" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="26" font-weight="700" fill="#2d3748" text-anchor="middle">Sql</text>
+
+  <!-- 5 Dark Navy Stars (★★★★★) -->
+  <g fill="#2d3748" transform="translate(68, 172) scale(0.65)">
+    <!-- Star 1 -->
+    <polygon points="12,0 15,8 24,8 17,14 20,22 12,17 4,22 7,14 0,8 9,8" />
+    <!-- Star 2 -->
+    <polygon points="44,0 47,8 56,8 49,14 52,22 44,17 36,22 39,14 32,8 41,8" />
+    <!-- Star 3 -->
+    <polygon points="76,0 79,8 88,8 81,14 84,22 76,17 68,22 71,14 64,8 73,8" />
+    <!-- Star 4 -->
+    <polygon points="108,0 111,8 120,8 113,14 116,22 108,17 100,22 103,14 96,8 105,8" />
+    <!-- Star 5 -->
+    <polygon points="140,0 143,8 152,8 145,14 148,22 140,17 132,22 135,14 128,8 137,8" />
+  </g>
+</svg>
