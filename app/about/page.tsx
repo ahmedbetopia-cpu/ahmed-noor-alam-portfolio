@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  BookOpen, 
-  Briefcase, 
-  Globe, 
-  Award, 
-  GraduationCap, 
-  Mail, 
-  Github, 
-  Linkedin, 
-  Calendar, 
-  MapPin, 
+import {
+  BookOpen,
+  Briefcase,
+  Globe,
+  Award,
+  GraduationCap,
+  Mail,
+  Github,
+  Linkedin,
+  Calendar,
+  MapPin,
   FolderGit2,
   Phone,
   CheckCircle2,
@@ -118,30 +118,11 @@ const academicAwards = [
   },
 ];
 
-const references = [
-  {
-    name: 'Nadia Nowshin',
-    designation: 'Assistant Professor',
-    organization: 'American International University-Bangladesh (AIUB)',
-    relation: 'Academic Reference',
-    phone: '+8801732944743',
-    email: 'nowshin@aiub.edu',
-  },
-  {
-    name: 'A.S.M. Zobaier',
-    designation: 'Platform Planning & Management | Information Technology',
-    organization: 'Robi Axiata Limited',
-    relation: 'Professional Reference',
-    phone: '+8801833183380',
-    email: 'asm.zobaier@robi.com.bd',
-  },
-];
-
 export default function AboutPage() {
   return (
     <PageTransition>
       <div className="container-main pt-10 sm:pt-14 pb-24 space-y-16 sm:space-y-24">
-        
+
         {/* ========================================================================= */}
         {/* SECTION 1: HERO / ABOUT ME HEADER */}
         {/* ========================================================================= */}
