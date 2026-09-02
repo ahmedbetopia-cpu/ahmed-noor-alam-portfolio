@@ -14,7 +14,6 @@ import {
   FolderGit2,
   Phone,
   CheckCircle2,
-  Users,
   Trophy,
   ShieldCheck
 } from 'lucide-react';
@@ -504,64 +503,6 @@ export default function AboutPage() {
           </ScrollReveal>
         </section>
 
-
-        {/* ========================================================================= */}
-        {/* SECTION 9: PROFESSIONAL REFERENCES */}
-        {/* ========================================================================= */}
-        <section className="pt-8 border-t border-warm-200/80 dark:border-olive-800/60">
-          <ScrollReveal direction="up">
-            <div className="flex items-center gap-2.5 mb-6">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 flex items-center justify-center">
-                <Users className="w-4 h-4" />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-warm-900 dark:text-warm-100">
-                References
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              {references.map((ref, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-3xl bg-white dark:bg-olive-900/60 border border-warm-200/90 dark:border-olive-800/80 p-6 sm:p-7 hover:border-emerald-500/40 transition-all duration-300 shadow-sm space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-warm-950 dark:text-warm-50">
-                      {ref.name}
-                    </h3>
-                    <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                      {ref.relation}
-                    </span>
-                  </div>
-
-                  <div>
-                    <p className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-                      {ref.designation}
-                    </p>
-                    <p className="text-xs text-warm-600 dark:text-warm-300 mt-0.5">
-                      {ref.organization}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 border-t border-warm-200/60 dark:border-olive-800/60 space-y-1.5 text-xs text-warm-700 dark:text-warm-300">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      <a href={`tel:${ref.phone}`} className="hover:underline font-mono">
-                        {ref.phone}
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      <a href={`mailto:${ref.email}`} className="hover:underline font-mono">
-                        {ref.email}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </section>
 
 
         {/* ========================================================================= */}
