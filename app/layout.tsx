@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { ThemeProvider } from 'next-themes';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { siteConfig } from '@/data/siteConfig';
@@ -58,36 +57,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                var theme = localStorage.getItem('ahmed-portfolio-theme-v2');
-                if (theme === 'light') {
-                  document.documentElement.classList.remove('dark');
-                } else {
-                  document.documentElement.classList.add('dark');
-                }
-              } catch (e) {
-                document.documentElement.classList.add('dark');
-              }
-            `,
-          }}
-        />
-      </head>
-      <body className="min-h-screen flex flex-col antialiased bg-warm-50 dark:bg-olive-950 text-warm-900 dark:text-warm-100 bg-ambient-glow selection:bg-emerald-500/30 selection:text-emerald-200">
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="dark" 
-          enableSystem={false} 
-          storageKey="ahmed-portfolio-theme-v2"
-        >
-          <Navbar />
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
-        </ThemeProvider>
+    <html lang="en">
+      <body className="min-h-screen flex flex-col antialiased bg-warm-50 text-warm-900 bg-ambient-glow selection:bg-emerald-500/30 selection:text-emerald-900">
+        <Navbar />
+        <main className="flex-1 flex flex-col">{children}</main>
+        <Footer />
       </body>
     </html>
   );

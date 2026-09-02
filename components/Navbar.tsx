@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
 import { siteConfig } from '@/data/siteConfig';
 
 export default function Navbar() {
@@ -48,10 +47,8 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right Action & Theme Toggle (Matching Screenshot 1) */}
+        {/* Right Action */}
         <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle />
-
           <Link
             href="/contact"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-warm-950 transition-all duration-200 shadow-sm hover:scale-[1.03] active:scale-[0.98]"
@@ -62,7 +59,6 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2 rounded-xl bg-warm-100 dark:bg-olive-900 border border-warm-200 dark:border-olive-800 text-warm-800 dark:text-warm-100"
