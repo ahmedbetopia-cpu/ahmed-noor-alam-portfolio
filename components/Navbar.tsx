@@ -7,30 +7,46 @@ import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 
-const blogDropdownItems = [
-  { href: '/blog/exchange-server', label: 'Exchange Server' },
-  { href: '/blog/intune', label: 'Intune' },
+const exchangeDropdownItems = [
+  { href: '/blog/exchange-online', label: 'Exchange Online' },
+  { href: '/blog/exchange-on-premises', label: 'Exchange On-Premises' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [blogDropOpen, setBlogDropOpen] = useState(false);
-  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [exchangeDropOpen, setExchangeDropOpen] = useState(false);
+  const [mobileExchangeOpen, setMobileExchangeOpen] = useState(false);
+
+  const exchangeRef = useRef<HTMLDivElement>(null);
+  const exchangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setBlogDropOpen(false);
+      if (exchangeRef.current && !exchangeRef.current.contains(e.target as Node)) {
+        setExchangeDropOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (exchangeTimeoutRef.current) clearTimeout(exchangeTimeoutRef.current);
+    };
   }, []);
 
-  const isBlogActive = pathname === '/' || pathname.startsWith('/blog');
+  const handleExchangeMouseEnter = () => {
+    if (exchangeTimeoutRef.current) clearTimeout(exchangeTimeoutRef.current);
+    setExchangeDropOpen(true);
+  };
+
+  const handleExchangeMouseLeave = () => {
+    exchangeTimeoutRef.current = setTimeout(() => {
+      setExchangeDropOpen(false);
+    }, 180);
+  };
+
+  const isExchangeActive = pathname.startsWith('/blog/exchange');
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-warm-50/90 border-b border-warm-200/80 transition-colors">
@@ -47,51 +63,60 @@ export default function Navbar() {
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-6">
-          {/* Blogs with dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          {/* Exchange Tab with dropdown */}
+          <div
+            className="relative"
+            ref={exchangeRef}
+            onMouseEnter={handleExchangeMouseEnter}
+            onMouseLeave={handleExchangeMouseLeave}
+          >
             <button
-              onClick={() => setBlogDropOpen((o) => !o)}
-              className={`flex items-center gap-1 text-sm font-medium transition-colors ${
-                isBlogActive
+              onClick={() => setExchangeDropOpen((o) => !o)}
+              className={`flex items-center gap-1 text-sm font-medium transition-colors py-1 ${
+                isExchangeActive
                   ? 'text-emerald-700 font-bold'
                   : 'text-warm-600 hover:text-warm-950'
               }`}
             >
-              Blogs
+              Exchange
               <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${blogDropOpen ? 'rotate-180' : ''}`}
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  exchangeDropOpen ? 'rotate-180' : ''
+                }`}
               />
             </button>
 
             <AnimatePresence>
-              {blogDropOpen && (
+              {exchangeDropOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-0 top-full mt-2.5 w-48 rounded-2xl bg-white border border-warm-200/90 shadow-lg overflow-hidden"
+                  className="absolute left-0 top-full pt-2 w-56 z-50"
                 >
-                  {blogDropdownItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setBlogDropOpen(false)}
-                      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700 ${
-                        pathname === item.href
-                          ? 'bg-emerald-50 text-emerald-700 font-bold'
-                          : 'text-warm-700'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  <div className="rounded-2xl bg-white border border-warm-200/90 shadow-xl overflow-hidden p-1 space-y-0.5">
+                    {exchangeDropdownItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setExchangeDropOpen(false)}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700 ${
+                          pathname === item.href
+                            ? 'bg-emerald-50 text-emerald-700 font-bold'
+                            : 'text-warm-700'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* Other nav links */}
+          {/* Other nav links: Case Studies, About, Contact */}
           {siteConfig.navLinks
             .filter((l) => l.href !== '/')
             .map((link) => {
@@ -145,35 +170,40 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden border-t border-warm-200 bg-warm-50/95 backdrop-blur-xl px-4 py-4 space-y-1 overflow-hidden"
           >
-            {/* Mobile Blogs accordion */}
+            {/* Mobile Exchange accordion */}
             <div>
               <button
-                onClick={() => setMobileBlogOpen((o) => !o)}
+                onClick={() => setMobileExchangeOpen((o) => !o)}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                  isBlogActive
+                  isExchangeActive
                     ? 'bg-emerald-500/10 text-emerald-600 font-bold'
                     : 'text-warm-700 hover:bg-warm-100'
                 }`}
               >
-                <span>Blogs</span>
+                <span>Exchange</span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${mobileBlogOpen ? 'rotate-180' : ''}`}
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileExchangeOpen ? 'rotate-180' : ''
+                  }`}
                 />
               </button>
 
               <AnimatePresence>
-                {mobileBlogOpen && (
+                {mobileExchangeOpen && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden pl-4"
+                    className="overflow-hidden pl-4 space-y-0.5 pt-0.5"
                   >
-                    {blogDropdownItems.map((item) => (
+                    {exchangeDropdownItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        onClick={() => { setMobileOpen(false); setMobileBlogOpen(false); }}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setMobileExchangeOpen(false);
+                        }}
                         className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                           pathname === item.href
                             ? 'bg-emerald-500/10 text-emerald-600 font-bold'
