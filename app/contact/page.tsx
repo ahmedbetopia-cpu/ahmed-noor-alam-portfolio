@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { 
   Mail, 
   Phone, 
-  MapPin, 
   Linkedin, 
   Github, 
   Clock, 
@@ -42,13 +41,6 @@ const contactDetails = [
     href: siteConfig.links.linkedin,
     description: 'Professional profile & network connections',
   },
-  {
-    icon: MapPin,
-    label: 'Location',
-    value: siteConfig.location,
-    href: 'https://maps.google.com/?q=Malibagh+Dhaka',
-    description: 'Dhaka-1217, Bangladesh',
-  },
 ];
 
 export default function ContactPage() {
@@ -76,7 +68,7 @@ export default function ContactPage() {
         {/* Contact Cards Grid */}
         <section>
           <ScrollReveal direction="up">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-3 gap-4">
               {contactDetails.map((item, idx) => {
                 const Icon = item.icon;
                 return (
