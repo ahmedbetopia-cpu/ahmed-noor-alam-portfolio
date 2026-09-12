@@ -1,0 +1,200 @@
+---
+title: "Exchange Server 2019 Prerequisites: Complete Step-by-Step Installation Guide"
+date: "2026-09-05"
+category: "Exchange Server"
+tags: ["Exchange Server", "Exchange On-Premises", "Windows Server", "Active Directory", "PowerShell", "Infrastructure"]
+excerpt: "A comprehensive, production-ready guide to preparing Windows Server and Active Directory for Microsoft Exchange Server 2019, including Mailbox role components, UCMA 4.0, IIS modules, and AD schema extensions."
+---
+
+Deploying Microsoft Exchange Server 2019 in an enterprise environment requires careful preparation of the underlying Windows Server operating system and the Active Directory infrastructure. Missing a required Windows feature, runtime component, or Active Directory preparation step can result in installation failures, service issues, or Active Directory schema and replication problems.
+
+This deployment guide covers the complete prerequisites for Exchange Server 2019 Mailbox servers, Edge Transport servers, and Exchange administration workstations, based on Microsoft-recommended production deployment practices.
+---
+
+## 1. Pre-Deployment Infrastructure Checklist
+
+Before installing any software components or mounting the Exchange ISO, ensure the host server satisfies these foundation requirements:
+
+- **Server Hostname**: Standardized NetBIOS / DNS hostname assigned (e.g., `EX-01` or `MBX-01`). Avoid renaming the server after installing Exchange.
+- **Network Configuration**: Static IPv4 address configured with reliable internal DNS server addresses pointing to Active Directory Domain Controllers.
+- **Domain Join**: Server joined to the target Active Directory forest and rebooted.
+- **Administrative Privileges**: The deployment administrator account must be a member of:
+  - **Schema Admins** (for schema extension)
+  - **Enterprise Admins** (for AD preparation)
+  - **Domain Admins** & Local **Administrators** group on the target Exchange server.
+
+<Callout type="warning" title="Privileged Group Best Practice">
+Membership in <code>Schema Admins</code> and <code>Enterprise Admins</code> is only required during initial Active Directory preparation (<code>/PrepareSchema</code> and <code>/PrepareAD</code>). Once setup completes, remove day-to-day administrator accounts from these highly sensitive groups.
+</Callout>
+
+---
+
+## 2. Exchange 2019 Mailbox Server Prerequisites
+
+The Mailbox server role handles all messaging storage, Client Access Services (CAS), transport pipeline, and mailbox databases. Follow the steps below in sequence.
+
+### Step 1: Install Required Windows Features via PowerShell
+
+Launch **Windows PowerShell as Administrator** on the target server and execute the following unified command to install all necessary Windows Server roles, IIS web components, clustering tools, and Active Directory RSAT modules:
+
+```powershell
+Install-WindowsFeature Server-Media-Foundation, NET-Framework-45-Core, `
+  NET-Framework-45-ASPNET, NET-WCF-HTTP-Activation45, `
+  NET-WCF-Pipe-Activation45, NET-WCF-TCP-Activation45, `
+  NET-WCF-TCP-PortSharing45, RPC-over-HTTP-proxy, RSAT-Clustering, `
+  RSAT-Clustering-CmdInterface, RSAT-Clustering-Mgmt, RSAT-Clustering-PowerShell, `
+  WAS-Process-Model, Web-Asp-Net45, Web-Basic-Auth, Web-Client-Auth, `
+  Web-Digest-Auth, Web-Dir-Browsing, Web-Dyn-Compression, Web-Http-Errors, `
+  Web-Http-Logging, Web-Http-Redirect, Web-Http-Tracing, Web-ISAPI-Ext, `
+  Web-ISAPI-Filter, Web-Metabase, Web-Mgmt-Console, Web-Mgmt-Service, `
+  Web-Net-Ext45, Web-Request-Monitor, Web-Server, Web-Stat-Compression, `
+  Web-Static-Content, Web-Windows-Auth, Web-WMI, Windows-Identity-Foundation, RSAT-ADDS
+```
+
+<Callout type="tip" title="Installation Output Verification">
+Ensure the PowerShell command returns <code>Success: True</code> with <code>RestartNeeded: No</code> before moving to third-party runtimes. If a restart is indicated, reboot the machine first.
+</Callout>
+
+---
+
+### Step 2: Install .NET Framework 4.8
+
+Exchange Server 2019 Cumulative Updates require **Microsoft .NET Framework 4.8**. 
+
+- **Official Download**: [Download .NET Framework - free official downloads | .NET](https://dotnet.microsoft.com/en-us/download/dotnet-framework)
+
+1. Download the offline installer for **.NET Framework 4.8** (`ndp48-x86-x64-allos-enu.exe`).
+2. Run the installer with administrative privileges.
+3. **Restart the server** once installation completes to allow native image generator assemblies to compile.
+
+---
+
+### Step 3: Install Visual C++ 2012 & 2013 Redistributables
+
+Exchange Server relies on native C++ libraries for database processing (Extensible Storage Engine / ESE) and content indexing:
+
+1. **Visual C++ Redistributable for Visual Studio 2012 Update 4 (x64)**:
+   - Official Download: [Download Visual C++ Redistributable for Visual Studio 2012 Update 4 from Official Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=30679)
+2. **Visual C++ Redistributable Packages for Visual Studio 2013 (x64)**:
+   - Official Download: [Update for Visual C++ 2013 Redistributable Package | Microsoft Support](https://support.microsoft.com/en-us/servicing/visual-studio/update/2020/11/update-for-visual-c-2013-redistributable-package)
+
+Install both 64-bit packages (`vcredist_x64.exe`). Both packages are strictly required by the Exchange setup prerequisite validator.
+
+---
+
+### Step 4: Install IIS URL Rewrite Module 2.1
+
+The **IIS URL Rewrite Module** is required for Exchange Server 2016 CU22 and Exchange Server 2019 CU11 to handle modern URL redirection, security mitigation rules, and hybrid modern authentication headers.
+
+- **Official Download**: [URL Rewrite : The Official Microsoft IIS Site](https://www.iis.net/downloads/microsoft/url-rewrite)
+
+1. Download the x64 installer for IIS URL Rewrite Module 2.1.
+2. Complete the setup wizard. No system reboot is required.
+
+---
+
+### Step 5: Install Unified Communications Managed API 4.0 (UCMA 4.0)
+
+Exchange Mailbox servers use the **Unified Communications Managed API (UCMA) 4.0 Runtime** for voicemail routing, unified messaging integrations, and speech services.
+
+- **Official Download**: [Download Unified Communications Managed API 4.0 Runtime from Official Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=34992)
+
+1. Download `UcmaRuntimeSetup.exe`.
+2. Run the installer as Administrator and complete the setup wizard.
+
+---
+
+## 3. Edge Transport Server Prerequisites
+
+If you are deploying a DMZ perimeter Edge Transport server for hygiene, anti-spam, and perimeter mail relay:
+
+### Step 1: Install Active Directory Lightweight Directory Services (AD LDS)
+
+Run PowerShell as Administrator:
+
+```powershell
+Install-WindowsFeature ADLDS
+```
+
+### Step 2: Install .NET Framework & Visual C++
+- Install [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework) (reboot required).
+- Install [Visual C++ Redistributable for Visual Studio 2012 Update 4 (x64)](https://www.microsoft.com/en-us/download/details.aspx?id=30679).
+
+<Callout type="info" title="Domain Membership Note">
+Edge Transport servers must **not** be joined to the internal Active Directory domain. They operate in a workgroup in the DMZ and synchronize recipient information via EdgeSync subscriptions over secure LDAP (port 50636).
+</Callout>
+
+---
+
+## 4. Exchange Management Tools Prerequisites
+
+To administer Exchange Server from a dedicated management jumpbox or administrator workstation without remoting directly to the Mailbox servers:
+
+### On Windows Server OS:
+```powershell
+Install-WindowsFeature -Name Web-Mgmt-Console, Web-Metabase
+```
+
+### On Windows 10 / Windows 11 Enterprise:
+Run PowerShell as Administrator:
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole, IIS-Metabase -All
+```
+Then install [Visual C++ Redistributable 2012 (x64)](https://www.microsoft.com/en-us/download/details.aspx?id=30679) and [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
+
+---
+
+## 5. Active Directory Forest & Schema Preparation
+
+Once the host server prerequisites are installed, prepare the Active Directory environment:
+
+1. Right-click the **Exchange Server 2019 ISO image** and select **Mount**. Note the assigned drive letter (for example, `D:`).
+2. Open an elevated **PowerShell** prompt and navigate to the mounted drive:
+
+```powershell
+Set-Location D:\
+```
+
+### Step 5.1: Extend Active Directory Schema
+
+Extends the forest schema with Exchange classes, attributes, and access control entries:
+
+```powershell
+.\Setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
+```
+
+Wait until the process outputs **"The Exchange Server setup operation completed successfully."** Allow Active Directory replication to synchronize across all domain controllers before proceeding.
+
+### Step 5.2: Prepare Active Directory Organization
+
+Creates the Exchange container in the configuration partition, administrative groups, RBAC roles, and system mailboxes:
+
+```powershell
+.\Setup.exe /PrepareAD /OrganizationName:"YourOrganization" /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
+```
+
+*(Replace `"YourOrganization"` with your desired organizational unit name, e.g., `"BetopiaGroup"` or `"EnterpriseMail"`).*
+
+### Step 5.3: Prepare All Active Directory Domains
+
+Prepares all domains in the forest where Exchange servers or mail-enabled objects reside:
+
+```powershell
+.\Setup.exe /PrepareAllDomains /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
+```
+
+---
+
+## Summary Checklist
+
+| Prerequisite | Mailbox Role | Edge Transport | Management Tools |
+| :--- | :--- | :--- | :--- |
+| **Windows OS Features (IIS, WAS, RPC, RSAT)** | ✅ Required | ❌ Not Required | ⚠️ Minimal (IIS Management) |
+| **Active Directory LDS** | ❌ Not Required | ✅ Required | ❌ Not Required |
+| **.NET Framework 4.8** | ✅ Required | ✅ Required | ✅ Required |
+| **Visual C++ 2012 Redistributable** | ✅ Required | ✅ Required | ✅ Required |
+| **Visual C++ 2013 Redistributable** | ✅ Required | ❌ Not Required | ❌ Not Required |
+| **IIS URL Rewrite Module 2.1** | ✅ Required | ❌ Not Required | ❌ Not Required |
+| **UCMA 4.0 Runtime** | ✅ Required | ❌ Not Required | ❌ Not Required |
+| **AD Schema & Forest Preparation** | ✅ Required | ❌ Not Required | ❌ Not Required |

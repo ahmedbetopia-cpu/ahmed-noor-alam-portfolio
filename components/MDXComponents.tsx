@@ -80,6 +80,20 @@ export const mdxComponents = {
       </a>
     );
   },
+  table: (props: any) => (
+    <div className="overflow-x-auto my-8 rounded-xl border border-warm-200 dark:border-olive-800/80 bg-white dark:bg-olive-950/40 shadow-sm">
+      <table className="w-full text-left text-sm border-collapse" {...props} />
+    </div>
+  ),
+  thead: (props: any) => <thead className="bg-warm-50/80 dark:bg-olive-900/50 border-b border-warm-200 dark:border-olive-800" {...props} />,
+  tbody: (props: any) => <tbody className="divide-y divide-warm-100 dark:divide-olive-800/40" {...props} />,
+  tr: (props: any) => <tr className="hover:bg-warm-50/40 dark:hover:bg-olive-900/20 transition-colors" {...props} />,
+  th: (props: any) => (
+    <th className="px-5 py-4 font-semibold text-warm-900 dark:text-warm-100 text-sm whitespace-nowrap" {...props} />
+  ),
+  td: (props: any) => (
+    <td className="px-5 py-4 text-warm-700 dark:text-warm-300 align-middle text-sm" {...props} />
+  ),
   blockquote: (props: any) => (
     <blockquote className="border-l-4 border-gold-500 pl-4 italic text-warm-600 dark:text-warm-400 my-6 bg-warm-100/50 dark:bg-olive-900/40 p-4 rounded-r-xl" {...props} />
   ),
@@ -88,8 +102,19 @@ export const mdxComponents = {
 };
 
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 
 export default function MDXContent({ source }: { source: string }) {
-  return <MDXRemote source={source} components={mdxComponents} />;
+  return (
+    <MDXRemote
+      source={source}
+      components={mdxComponents}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      }}
+    />
+  );
 }
 
