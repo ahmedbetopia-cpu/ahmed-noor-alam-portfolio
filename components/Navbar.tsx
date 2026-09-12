@@ -116,7 +116,7 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          {/* Other nav links: Case Studies, About, Contact */}
+          {/* Other nav links: About, Contact */}
           {siteConfig.navLinks
             .filter((l) => l.href !== '/')
             .map((link) => {

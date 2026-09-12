@@ -16,7 +16,6 @@ export const siteConfig = {
     phone: 'tel:+8801534584546',
   },
   navLinks: [
-    { href: '/case-study', label: 'Case Studies' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ],
