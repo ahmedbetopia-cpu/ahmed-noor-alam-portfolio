@@ -46,12 +46,23 @@
 
   ::selection {
     background-color: rgba(22, 163, 74, 0.25);
-    color: #15803d;
   }
 
   .dark ::selection {
     background-color: rgba(245, 158, 11, 0.25);
-    color: #fef08a;
+  }
+
+  /* Code block & pre selection: ensure high contrast and clear readability */
+  pre ::selection,
+  pre *::selection,
+  code::selection,
+  code *::selection,
+  .not-prose pre ::selection,
+  .not-prose pre *::selection {
+    background-color: rgba(16, 185, 129, 0.45) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: none !important;
   }
 }
 

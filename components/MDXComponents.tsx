@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, Info, AlertTriangle, CheckCircle, Flame } from 'lucide-react';
+import CodeBlock from '@/components/CodeBlock';
 
 interface CalloutProps {
   children: React.ReactNode;
@@ -99,6 +100,7 @@ export const mdxComponents = {
   ),
   hr: () => <hr className="my-10 border-warm-200 dark:border-olive-800" />,
   Callout,
+  pre: CodeBlock,
 };
 
 import { MDXRemote } from 'next-mdx-remote/rsc';
