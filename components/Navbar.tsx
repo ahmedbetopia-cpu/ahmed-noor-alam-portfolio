@@ -12,14 +12,23 @@ const exchangeDropdownItems = [
   { href: '/blog/exchange-on-premises', label: 'Exchange On-Premises' },
 ];
 
+const deviceManagementDropdownItems = [
+  { href: '/blog/intune', label: 'Intune' },
+  { href: '/blog/mecm-sccm', label: 'MECM/SCCM' },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [exchangeDropOpen, setExchangeDropOpen] = useState(false);
   const [mobileExchangeOpen, setMobileExchangeOpen] = useState(false);
+  const [deviceDropOpen, setDeviceDropOpen] = useState(false);
+  const [mobileDeviceOpen, setMobileDeviceOpen] = useState(false);
 
   const exchangeRef = useRef<HTMLDivElement>(null);
   const exchangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const deviceRef = useRef<HTMLDivElement>(null);
+  const deviceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -27,11 +36,15 @@ export default function Navbar() {
       if (exchangeRef.current && !exchangeRef.current.contains(e.target as Node)) {
         setExchangeDropOpen(false);
       }
+      if (deviceRef.current && !deviceRef.current.contains(e.target as Node)) {
+        setDeviceDropOpen(false);
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       if (exchangeTimeoutRef.current) clearTimeout(exchangeTimeoutRef.current);
+      if (deviceTimeoutRef.current) clearTimeout(deviceTimeoutRef.current);
     };
   }, []);
 
@@ -46,7 +59,19 @@ export default function Navbar() {
     }, 180);
   };
 
+  const handleDeviceMouseEnter = () => {
+    if (deviceTimeoutRef.current) clearTimeout(deviceTimeoutRef.current);
+    setDeviceDropOpen(true);
+  };
+
+  const handleDeviceMouseLeave = () => {
+    deviceTimeoutRef.current = setTimeout(() => {
+      setDeviceDropOpen(false);
+    }, 180);
+  };
+
   const isExchangeActive = pathname.startsWith('/blog/exchange');
+  const isDeviceActive = pathname.startsWith('/blog/intune') || pathname.startsWith('/blog/mecm-sccm');
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-warm-50/90 border-b border-warm-200/80 transition-colors">
@@ -101,6 +126,59 @@ export default function Navbar() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setExchangeDropOpen(false)}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700 ${
+                          pathname === item.href
+                            ? 'bg-emerald-50 text-emerald-700 font-bold'
+                            : 'text-warm-700'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Device Management Tab with dropdown */}
+          <div
+            className="relative"
+            ref={deviceRef}
+            onMouseEnter={handleDeviceMouseEnter}
+            onMouseLeave={handleDeviceMouseLeave}
+          >
+            <button
+              onClick={() => setDeviceDropOpen((o) => !o)}
+              className={`flex items-center gap-1 text-sm font-medium transition-colors py-1 ${
+                isDeviceActive
+                  ? 'text-emerald-700 font-bold'
+                  : 'text-warm-600 hover:text-warm-950'
+              }`}
+            >
+              Device Management
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  deviceDropOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {deviceDropOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 top-full pt-2 w-56 z-50"
+                >
+                  <div className="rounded-2xl bg-white border border-warm-200/90 shadow-xl overflow-hidden p-1 space-y-0.5">
+                    {deviceManagementDropdownItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setDeviceDropOpen(false)}
                         className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700 ${
                           pathname === item.href
                             ? 'bg-emerald-50 text-emerald-700 font-bold'
@@ -203,6 +281,54 @@ export default function Navbar() {
                         onClick={() => {
                           setMobileOpen(false);
                           setMobileExchangeOpen(false);
+                        }}
+                        className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                          pathname === item.href
+                            ? 'bg-emerald-500/10 text-emerald-600 font-bold'
+                            : 'text-warm-600 hover:bg-warm-100'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Mobile Device Management accordion */}
+            <div>
+              <button
+                onClick={() => setMobileDeviceOpen((o) => !o)}
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  isDeviceActive
+                    ? 'bg-emerald-500/10 text-emerald-600 font-bold'
+                    : 'text-warm-700 hover:bg-warm-100'
+                }`}
+              >
+                <span>Device Management</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileDeviceOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              <AnimatePresence>
+                {mobileDeviceOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden pl-4 space-y-0.5 pt-0.5"
+                  >
+                    {deviceManagementDropdownItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setMobileDeviceOpen(false);
                         }}
                         className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                           pathname === item.href
