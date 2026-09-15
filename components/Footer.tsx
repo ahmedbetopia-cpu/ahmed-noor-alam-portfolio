@@ -14,9 +14,9 @@ export default function Footer() {
               <Image
                 src="/images/logo.png"
                 alt={siteConfig.name}
-                width={220}
-                height={73}
-                className="h-10 w-auto object-contain"
+                width={300}
+                height={67}
+                className="h-12 sm:h-14 w-auto object-contain"
               />
             </Link>
             <p className="text-sm text-warm-600 dark:text-warm-400 max-w-md leading-relaxed">
