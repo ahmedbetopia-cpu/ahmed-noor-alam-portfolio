@@ -24,9 +24,14 @@ export default function HomePage() {
               </h1>
 
               {/* Subtitle with IT Infrastructure Focus */}
-              <p className="text-base sm:text-lg text-warm-600 dark:text-warm-300 leading-relaxed">
-                Deep dives into enterprise Windows Server infrastructure, Microsoft Entra ID hybrid identity, MECM &amp; Intune endpoint management, and modern Microsoft 365 ecosystems.
-              </p>
+              <div className="space-y-3.5">
+                <p className="text-base sm:text-lg text-warm-600 dark:text-warm-300 leading-relaxed text-justify">
+                  Explore real-world Microsoft infrastructure solutions, deployment guides, troubleshooting insights, and field-tested best practices. From Exchange Server and Active Directory to Entra ID, Intune, MECM, and Microsoft 365, discover practical knowledge gained from hands-on enterprise experience.
+                </p>
+                <p className="text-base sm:text-lg font-bold text-warm-900 dark:text-warm-100 leading-relaxed">
+                  Trusted by IT professionals who build, manage, and modernize Microsoft environments.
+                </p>
+              </div>
             </div>
           </ScrollReveal>
         </section>
