@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
@@ -79,11 +80,17 @@ export default function Navbar() {
         {/* Brand Logo */}
         <Link
           href="/"
-          className="group flex items-center gap-2 text-xl font-bold tracking-tight text-warm-900"
+          className="group flex items-center gap-2 transition-transform duration-200 hover:opacity-90 active:scale-[0.98]"
+          aria-label={siteConfig.name}
         >
-          <span className="font-heading font-extrabold text-warm-900 group-hover:text-emerald-600 transition-colors">
-            {siteConfig.name}
-          </span>
+          <Image
+            src="/images/logo.png"
+            alt={siteConfig.name}
+            width={240}
+            height={80}
+            priority
+            className="h-10 sm:h-12 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Nav Links */}

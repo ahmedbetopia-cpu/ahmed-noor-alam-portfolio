@@ -8,7 +8,9 @@ export const siteConfig = {
   bio: 'Experienced IT Administrator & Technology Specialist with 6+ years of expertise in Windows Server environments, Active Directory & Entra ID hybrid identity, MECM/SCCM, Microsoft Intune, security compliance, and enterprise infrastructure operations.',
   tagline: 'Administering enterprise IT infrastructure, modern workplace solutions, hybrid identity, and cloud platforms.',
   url: 'https://ahmednooralam-ahmed-e61e.vercel.app',
-  ogImage: '/images/profile.svg',
+  ogImage: '/images/logo.png',
+  logo: '/images/logo.png',
+  favicon: '/favicon.ico',
   links: {
     github: 'https://github.com',
     linkedin: 'https://www.linkedin.com/in/ahmed-noor-alam',

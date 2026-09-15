@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Github, Linkedin, Mail, Server, Heart } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
@@ -9,11 +10,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-warm-200/70 dark:border-olive-800/50">
           {/* Brand & Bio */}
           <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2 text-lg font-bold tracking-tight text-warm-900 dark:text-warm-100">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                <Server className="w-3.5 h-3.5" />
-              </div>
-              <span>{siteConfig.name}</span>
+            <Link href="/" className="inline-block transition-opacity hover:opacity-90" aria-label={siteConfig.name}>
+              <Image
+                src="/images/logo.png"
+                alt={siteConfig.name}
+                width={220}
+                height={73}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-warm-600 dark:text-warm-400 max-w-md leading-relaxed">
               IT Administrator & Technology Specialist with 6+ years of expertise managing Windows Server environments, Entra ID hybrid identity, MECM/SCCM, Microsoft Intune, and Microsoft 365 cloud infrastructure.
