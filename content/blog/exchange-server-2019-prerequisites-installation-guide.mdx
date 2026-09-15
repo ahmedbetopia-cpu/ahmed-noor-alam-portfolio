@@ -14,7 +14,7 @@ This deployment guide covers the complete prerequisites for Exchange Server 2019
 
 ## 1. Pre-Deployment Infrastructure Checklist
 
-Before installing any software components or mounting the Exchange ISO, ensure the host server satisfies these foundation requirements:
+Before installing any software components or mounting the Exchange ISO, ensure that the host server meets the following prerequisite requirements:
 
 - **Server Hostname**: Standardized NetBIOS / DNS hostname assigned (e.g., `EX-01` or `MBX-01`). Avoid renaming the server after installing Exchange.
 - **Network Configuration**: Static IPv4 address configured with reliable internal DNS server addresses pointing to Active Directory Domain Controllers.
@@ -53,7 +53,7 @@ Install-WindowsFeature Server-Media-Foundation, NET-Framework-45-Core, `
 ```
 
 <Callout type="tip" title="Installation Output Verification">
-Ensure the PowerShell command returns <code>Success: True</code> with <code>RestartNeeded: No</code> before moving to third-party runtimes. If a restart is indicated, reboot the machine first.
+Ensure that the PowerShell command returns <code>Success: True</code> and <code>RestartNeeded: No</code> before proceeding with the installation. If a restart is required, reboot the machine first.
 </Callout>
 
 ---
@@ -143,47 +143,6 @@ Run PowerShell as Administrator:
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole, IIS-Metabase -All
 ```
 Then install [Visual C++ Redistributable 2012 (x64)](https://www.microsoft.com/en-us/download/details.aspx?id=30679) and [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
-
----
-
-## 5. Active Directory Forest & Schema Preparation
-
-Once the host server prerequisites are installed, prepare the Active Directory environment:
-
-1. Right-click the **Exchange Server 2019 ISO image** and select **Mount**. Note the assigned drive letter (for example, `D:`).
-2. Open an elevated **PowerShell** prompt and navigate to the mounted drive:
-
-```powershell
-Set-Location D:\
-```
-
-### Step 5.1: Extend Active Directory Schema
-
-Extends the forest schema with Exchange classes, attributes, and access control entries:
-
-```powershell
-.\Setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
-```
-
-Wait until the process outputs **"The Exchange Server setup operation completed successfully."** Allow Active Directory replication to synchronize across all domain controllers before proceeding.
-
-### Step 5.2: Prepare Active Directory Organization
-
-Creates the Exchange container in the configuration partition, administrative groups, RBAC roles, and system mailboxes:
-
-```powershell
-.\Setup.exe /PrepareAD /OrganizationName:"YourOrganization" /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
-```
-
-*(Replace `"YourOrganization"` with your desired organizational unit name, e.g., `"BetopiaGroup"` or `"EnterpriseMail"`).*
-
-### Step 5.3: Prepare All Active Directory Domains
-
-Prepares all domains in the forest where Exchange servers or mail-enabled objects reside:
-
-```powershell
-.\Setup.exe /PrepareAllDomains /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
-```
 
 ---
 
