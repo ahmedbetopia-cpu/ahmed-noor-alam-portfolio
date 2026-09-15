@@ -11,6 +11,7 @@
   "dependencies": {
     "browserslist": "^4.28.8",
     "caniuse-lite": "^1.0.30001810",
+    "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^11.3.0",
