@@ -14,7 +14,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
     >
       {/* Cover Image */}
       {post.coverImage && (
-        <div className="relative w-full h-48 bg-warm-100 dark:bg-olive-950 overflow-hidden border-b border-warm-200/70 dark:border-olive-800/50">
+        <div className="relative w-full aspect-video sm:h-48 bg-warm-100 dark:bg-olive-950 overflow-hidden border-b border-warm-200/70 dark:border-olive-800/50">
           <img
             src={post.coverImage}
             alt={post.title}
