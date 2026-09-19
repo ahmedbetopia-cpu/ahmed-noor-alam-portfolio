@@ -115,6 +115,14 @@ export const mdxComponents = {
     </span>
   ),
   hr: () => <hr className="my-10 border-warm-200 dark:border-olive-800" />,
+  mark: ({ children, className, ...props }: any) => (
+    <mark
+      className={`bg-amber-200/90 dark:bg-amber-400/25 text-warm-950 dark:text-amber-200 font-semibold px-1.5 py-0.5 rounded ${className || ''}`}
+      {...props}
+    >
+      {children}
+    </mark>
+  ),
   Callout,
   pre: CodeBlock,
 };
