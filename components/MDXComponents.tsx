@@ -98,6 +98,22 @@ export const mdxComponents = {
   blockquote: (props: any) => (
     <blockquote className="border-l-4 border-gold-500 pl-4 italic text-warm-600 dark:text-warm-400 my-6 bg-warm-100/50 dark:bg-olive-900/40 p-4 rounded-r-xl" {...props} />
   ),
+  img: ({ src, alt, ...props }: any) => (
+    <span className="block my-6">
+      <img
+        src={src}
+        alt={alt || ''}
+        className="w-full max-w-4xl mx-auto rounded-xl border border-warm-200 dark:border-olive-800/80 shadow-md object-contain"
+        loading="lazy"
+        {...props}
+      />
+      {alt && (
+        <span className="block text-center text-xs sm:text-sm text-warm-500 dark:text-warm-400 mt-2 italic font-sans">
+          {alt}
+        </span>
+      )}
+    </span>
+  ),
   hr: () => <hr className="my-10 border-warm-200 dark:border-olive-800" />,
   Callout,
   pre: CodeBlock,

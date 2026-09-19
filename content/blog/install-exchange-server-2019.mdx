@@ -1,0 +1,221 @@
+---
+title: "Install Exchange Server 2019"
+date: "2026-09-10"
+category: "Exchange On-Premises"
+tags: ["Exchange On-Premises", "Exchange Server", "Windows Server", "Active Directory", "PowerShell", "Deployment"]
+excerpt: "A complete step-by-step visual guide to installing Microsoft Exchange Server 2019 on Windows Server, covering ISO mounting, Active Directory schema and domain preparation, the full Setup wizard walkthrough, and first sign-in to the Exchange Admin Center (EAC)."
+coverImage: "/images/exchange-install/21-eac-signin.png"
+---
+
+Deploying Microsoft Exchange Server 2019 on Windows Server is a critical milestone for enterprise messaging infrastructure. This guide covers the complete end-to-end installation procedure: preparing Active Directory, extending the forest schema, walking through every screen of the Exchange Server 2019 Setup wizard, and performing your first logon to the Exchange Admin Center (EAC).
+
+---
+
+## 2. Install Exchange Server
+
+Before starting to install Exchange Server on Windows Server, make sure that the following is configured:
+
+- **Server name**: Ensure the server has been assigned its permanent hostname (e.g., `EX-01`).
+- **Fixed IP address**: Configure a static IPv4 address, subnet mask, default gateway, and internal DNS server pointers.
+- **Joined to the domain**: The target server must be joined to the Active Directory domain.
+- **Prerequisites installed on the server**: All required Windows Server OS roles, features, .NET Framework, Visual C++ Redistributables, and Unified Communications Managed API (UCMA) 4.0 must be fully deployed. For prerequisite instructions, see our [Exchange Server 2019 Prerequisites Installation Guide](/blog/exchange-server-2019-prerequisites-installation-guide).
+- **Administrative Permissions**: The account used for installation needs to be a member of the **Schema Admins** and **Enterprise Admins** security groups.
+
+<Callout type="warning" title="Important Notice">
+After you install Exchange on a server, you must not change the server name. Renaming a server after you've installed an Exchange server role is not supported by Microsoft.
+</Callout>
+
+### Mount the Exchange Server ISO
+
+In **File Explorer**, right-click on the Exchange Server ISO image file (e.g., `ExchangeServer2019-x64-CU14.iso`) and select **Mount**. It will mount the ISO to a virtual DVD drive letter (such as `E:`).
+
+![In File Explorer, right-click on the Exchange Server ISO image file and select Mount. It will mount the ISO to a drive.](/images/exchange-install/01-mount-iso.png)
+
+Open **PowerShell with administrative privileges** and navigate to the drive letter on which the Exchange Server ISO is mounted:
+
+```powershell
+cd E:
+```
+
+![Open PowerShell with administrative privileges and navigate to the drive letter on which the Exchange Server ISO is mounted](/images/exchange-install/02-navigate-iso-drive.png)
+
+---
+
+## 2.1 Extend the Active Directory schema
+
+To support Exchange Server 2019, the Active Directory forest schema must be extended with Exchange classes, attributes, and definitions.
+
+Please enter the following command in the PowerShell window:
+
+```powershell
+.\Setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
+```
+
+![Execute .\Setup.exe /PrepareSchema in elevated PowerShell](/images/exchange-install/03-prepare-schema-cmd.png)
+
+Please wait until the process displays **"Completed"** before proceeding.
+
+![Active Directory schema extension completed successfully](/images/exchange-install/04-prepare-schema-completed.png)
+
+---
+
+## 2.2 Prepare Active Directory
+
+Next, prepare Active Directory for the Exchange organization. This creates the Exchange container in the Active Directory Configuration partition, administrative security groups, and default address lists.
+
+Please enter the following command in the PowerShell window:
+
+```powershell
+.\Setup.exe /PrepareAD /OrganizationName:"MyLab" /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF
+```
+
+![Execute .\Setup.exe /PrepareAD with your OrganizationName in PowerShell](/images/exchange-install/05-prepare-ad-cmd.png)
+
+<Callout type="tip" title="Exchange Organization Name Rules">
+<strong>Note:</strong> You need to select a name for the Exchange organization. The organization's name is used internally by Exchange. It isn't typically seen by users and doesn't affect the functionality of Exchange. Also, it doesn't determine what you can use for email addresses.
+
+The organization name can't contain more than 64 characters, and can't be blank. Valid characters are <code>A</code> to <code>Z</code>, <code>a</code> to <code>z</code>, <code>0</code> to <code>9</code>, hyphen or dash (<code>-</code>), and space, but leading or trailing spaces aren't allowed. <strong>You can't change the organization name after it's set.</strong>
+</Callout>
+
+Please wait until the operation has fully completed.
+
+![Active Directory organization preparation completed successfully](/images/exchange-install/06-prepare-ad-completed.png)
+
+---
+
+## 2.3 Prepare Active Directory domains
+
+Prepare all domains in the Active Directory forest to host Exchange servers and mail-enabled objects.
+
+Please enter the following command in the PowerShell window:
+
+```powershell
+.\Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /PrepareAllDomains
+```
+
+![Execute .\Setup.exe /PrepareAllDomains in PowerShell](/images/exchange-install/07-prepare-all-domains-cmd.png)
+
+Please wait until the operation has fully completed.
+
+![Active Directory domain preparation completed successfully](/images/exchange-install/08-prepare-all-domains-completed.png)
+
+---
+
+## 2.4 Exchange server installation
+
+Once Active Directory preparation is complete, proceed with installing the Exchange Server Mailbox role.
+
+Please navigate to the drive where the Exchange Server is mounted, locate the **Setup** application, right-click on it, and select **Run as administrator**.
+
+![Navigate to the mounted drive, right-click Setup.exe, and select Run as administrator](/images/exchange-install/09-run-setup-as-administrator.jpg)
+
+For installing the Exchange Server, please follow all the steps outlined below:
+
+### Step 1: Check for Updates
+Select **Connect to the Internet and check for updates** (or choose "Don't check for updates right now" if your server does not have direct internet access during setup). Click **Next**.
+
+![Select Connect to the Internet and check for updates and click Next](/images/exchange-install/10-setup-check-for-updates.png)
+
+### Step 2: Downloading Updates
+Setup checks for any available cumulative updates or hotfixes online. When it confirms "No updates found, click next to continue with setup", click **Next**.
+
+![Setup confirms no additional updates found, click Next](/images/exchange-install/11-setup-downloading-updates.png)
+
+### Step 3: Introduction
+Review the Microsoft Exchange Server deployment overview and resources. Click **Next** to proceed.
+
+![Review the Introduction page and click Next](/images/exchange-install/12-setup-introduction.jpg)
+
+### Step 4: License Agreement
+Review the Microsoft Software License Terms. Select **"I accept the license agreement, but I'm not ready to share diagnostic data with Microsoft."** Click **Next**.
+
+![Accept the license agreement without diagnostic telemetry and click Next](/images/exchange-install/13-setup-license-agreement.jpg)
+
+### Step 5: Recommended Settings
+Select **Use recommended settings** so that Exchange Server can automatically check online for error solutions and provide usage feedback. Click **Next**.
+
+![Select Use recommended settings and click Next](/images/exchange-install/14-setup-recommended-settings.png)
+
+### Step 6: Server Role Selection
+Under the server roles list:
+- Check **Mailbox role** (this automatically selects **Management Tools**).
+- Check **Automatically install Windows Server roles and features that are required to install Exchange Server**.
+- Click **Next**.
+
+![Select Mailbox role and check Automatically install Windows Server roles and features](/images/exchange-install/15-setup-server-role-selection.jpg)
+
+### Step 7: Installation Space and Location
+Please specify the Exchange Server installation path as required before proceeding with the installation (the default path is `C:\Program Files\Microsoft\Exchange Server\V15`). Click **Next**.
+
+![Specify Exchange Server installation directory path and click Next](/images/exchange-install/16-setup-installation-space-location.png)
+
+### Step 8: Malware Protection Settings
+Malware scanning helps protect your messaging environment by detecting messages that may contain viruses or spyware. Under **Disable malware scanning**, select **No** to keep malware protection enabled. Click **Next**.
+
+![Select No to keep Malware Protection enabled and click Next](/images/exchange-install/17-setup-malware-protection.jpg)
+
+### Step 9: Readiness Checks
+The wizard evaluates server readiness, checking installed prerequisites, .NET Framework version, and Active Directory connectivity. Once the analysis reaches 100% without blocking issues, click **Install**.
+
+![Readiness Checks completed at 100%, click Install](/images/exchange-install/18-setup-readiness-checks.jpg)
+
+### Step 10: Setup Progress
+Please wait until the setup process has been completed. The installer copies binaries, compiles native image assemblies, and installs all core Exchange messaging services across all 13 sub-steps.
+
+![Exchange Server Setup Progress copying files and configuring services](/images/exchange-install/19-setup-progress.png)
+
+### Step 11: Setup Completed
+When the wizard reaches 100% and displays **"Congratulations! Setup has finished successfully"**, click **Finish**.
+
+![Setup Completed successfully, click Finish](/images/exchange-install/20-setup-completed.jpg)
+
+Click **Finish** after completing the installation of Exchange and **restart the system** to apply all system configurations and start Exchange services.
+
+```powershell
+Restart-Computer -Force
+```
+
+---
+
+## 2.5 Sign in to Exchange Admin Center (EAC)
+
+Once the server has rebooted and all Microsoft Exchange services are running, sign in to the web-based management interface.
+
+Sign in to Exchange Admin Center (EAC). Open your favorite browser and go to:
+- `https://hostname/ecp` (Change the hostname to yours)
+- Another way is to use `https://localhost/ecp`
+
+In our example, the Exchange Server hostname is **EX-01**.
+
+Fill in the domain and administrator credentials (e.g., `mylab.com\ex.admin`). Click the **sign in** button.
+
+![Exchange Admin Center login screen with domain credentials entered](/images/exchange-install/21-eac-signin.png)
+
+Once authenticated, navigate to **recipients > mailboxes**. 
+
+The mailboxes area is almost empty, except for one mailbox that is showing. That's the account that we used for installing Exchange Server (`EX Admin`).
+
+![Exchange Admin Center recipients and mailboxes overview](/images/exchange-install/22-eac-mailboxes-list.png)
+
+---
+
+## Summary Checklist
+
+| Phase | Description | Key Command / Action |
+| :--- | :--- | :--- |
+| **Prerequisites** | Validate host configuration & admin permissions | Schema Admins & Enterprise Admins |
+| **Mount ISO** | Mount Exchange Server 2019 CU ISO | Right-click ISO > Mount (`cd E:`) |
+| **Extend Schema** | Extend Active Directory forest schema | `.\Setup.exe /PrepareSchema` |
+| **Prepare AD** | Create Exchange organization containers | `.\Setup.exe /PrepareAD /OrganizationName:"MyLab"` |
+| **Prepare Domains** | Prepare all forest domains | `.\Setup.exe /PrepareAllDomains` |
+| **Run Setup** | Launch GUI installation wizard | Right-click `Setup.exe` > Run as administrator |
+| **Role & Feature Setup** | Mailbox role + Auto install Windows features | Setup Wizard: Server Role Selection |
+| **Malware Protection** | Retain default antimalware protection | Setup Wizard: Disable scanning > No |
+| **Install & Reboot** | Run installation & restart host | Setup Wizard: Install & `Restart-Computer` |
+| **EAC Validation** | Sign in & verify primary mailbox | `https://localhost/ecp` |
+
+---
+
+## Learn More
+
+[https://learn.microsoft.com/en-us/exchange/plan-and-deploy/deploy-new-installations/install-mailbox-role](https://learn.microsoft.com/en-us/exchange/plan-and-deploy/deploy-new-installations/install-mailbox-role)
