@@ -10,11 +10,11 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group relative flex flex-col rounded-3xl bg-white dark:bg-olive-900/60 border border-warm-200/90 dark:border-olive-800/80 overflow-hidden hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:shadow-xl dark:hover:shadow-glow-olive hover:-translate-y-1 transition-all duration-300"
+      className="group relative flex flex-col h-full rounded-3xl bg-white dark:bg-olive-900/60 border border-warm-200/90 dark:border-olive-800/80 overflow-hidden hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:shadow-xl dark:hover:shadow-glow-olive hover:-translate-y-1 transition-all duration-300"
     >
       {/* Cover Image */}
       {post.coverImage && (
-        <div className="relative w-full aspect-video sm:h-48 bg-warm-100 dark:bg-olive-950 overflow-hidden border-b border-warm-200/70 dark:border-olive-800/50">
+        <div className="relative w-full aspect-[16/9] bg-warm-100 dark:bg-olive-950 overflow-hidden border-b border-warm-200/70 dark:border-olive-800/50 flex-shrink-0">
           <img
             src={post.coverImage}
             alt={post.title}
@@ -62,18 +62,18 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           </span>
         </div>
 
-        {/* Title with matching font-serif */}
-        <h3 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-warm-950 dark:text-warm-50 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors mb-2 line-clamp-2 leading-snug">
+        {/* Title with matching font-serif and uniform height */}
+        <h3 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-warm-950 dark:text-warm-50 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors mb-2 line-clamp-2 leading-snug min-h-[3.25rem] sm:min-h-[3.5rem] flex items-start">
           {post.title}
         </h3>
 
         {/* Excerpt */}
-        <p className="text-xs sm:text-sm text-warm-600 dark:text-warm-300 leading-relaxed line-clamp-3 mb-6 flex-1">
+        <p className="text-xs sm:text-sm text-warm-600 dark:text-warm-300 leading-relaxed line-clamp-3 mb-6 min-h-[3.75rem] flex-1">
           {post.excerpt}
         </p>
 
-        {/* Read More link */}
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
+        {/* Read More link pinned to bottom */}
+        <div className="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 group-hover:translate-x-1 transition-transform pt-1">
           <span>Read Article</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </div>

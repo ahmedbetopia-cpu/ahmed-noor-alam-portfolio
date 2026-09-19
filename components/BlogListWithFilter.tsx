@@ -55,12 +55,13 @@ export default function BlogListWithFilter({ posts }: BlogListWithFilterProps) {
 
       {/* Post Grid with Framer Motion Stagger */}
       {filteredPosts.length > 0 ? (
-        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           <AnimatePresence>
             {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.slug}
                 layout
+                className="h-full flex flex-col"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}

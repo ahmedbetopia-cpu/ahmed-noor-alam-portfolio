@@ -30,9 +30,11 @@ export default function BlogListClient({ posts, categories }: { posts: BlogPost[
 
       {/* Post Grid */}
       {filtered.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           {filtered.map((post) => (
-            <BlogCard key={post.slug} post={post} />
+            <div key={post.slug} className="h-full flex flex-col">
+              <BlogCard post={post} />
+            </div>
           ))}
         </div>
       ) : (
